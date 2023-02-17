@@ -105,7 +105,7 @@
           </el-table-column>
           <el-table-column prop="ladder" label="参数阶梯" width="230px">
             <template slot-scope="scope">
-              <div v-for="(item, index) in scope.row.ladder" :key="`lab${index}`" class="ladder-box">
+              <div v-for="(item, index) in scope.row.ladder" :key="`lab${index}`" class="ladder-box" :class="isLook || !scope.row.a?'no-click':''">
                 <el-form-item>
                   <el-input v-model="scope.row.ladder[index].start" :disabled="index === 0 ||isLook || !scope.row.a" @input="value=>inputLeft(value, index, scope.row.ladder)"></el-input>
                 </el-form-item>
@@ -279,5 +279,8 @@ export default {
     padding-left: 10px;
     cursor: pointer;
   }
+}
+.no-click {
+  pointer-events: none;
 }
 </style>
