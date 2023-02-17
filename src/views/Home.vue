@@ -35,10 +35,10 @@
         >
           <el-table-column prop="date" label="分类"> </el-table-column>
           <el-table-column prop="name" label="指标名称"> </el-table-column>
-          <el-table-column prop="a" label="是否启用">
+          <el-table-column prop="check" label="是否启用">
             <template slot-scope="scope">
               <el-switch
-                v-model="scope.row.a"
+                v-model="scope.row.check"
                 active-color="#13ce66"
                 :disabled="isLook"
                 >
@@ -48,20 +48,20 @@
           <el-table-column prop="parameters" label="指标参数(m)">
             <template slot-scope="scope">
               <el-form-item :prop="'tableLook.'+scope.$index+'.parameters'" :rules="rules['parameters']">
-                <el-input v-model="scope.row.parameters" :disabled="isLook || !scope.row.a"></el-input>
+                <el-input v-model="scope.row.parameters" :disabled="isLook || !scope.row.check"></el-input>
               </el-form-item>
             </template>
           </el-table-column>
           <el-table-column prop="baseline" label="参数基线(n)">
             <template slot-scope="scope">
               <el-form-item :prop="'tableLook.'+scope.$index+'.baseline'" :rules="rules['parameters']">
-                <el-input v-model="scope.row.baseline" :disabled="isLook || !scope.row.a"></el-input>
+                <el-input v-model="scope.row.baseline" :disabled="isLook || !scope.row.check"></el-input>
               </el-form-item>
             </template>
           </el-table-column>
           <el-table-column prop="type" label="得分类型*">
             <template slot-scope="scope">
-               <el-select v-model="scope.row.type" placeholder="请选择" :disabled="isLook || !scope.row.a">
+               <el-select v-model="scope.row.type" placeholder="请选择" :disabled="isLook || !scope.row.check">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -74,13 +74,13 @@
           <el-table-column prop="score" label="得分封顶*">
             <template slot-scope="scope">
               <el-form-item :prop="'tableLook.'+scope.$index+'.score'" :rules="rules['scoreNegative']">
-                <el-input v-model="scope.row.score" :disabled="isLook || !scope.row.a"></el-input>
+                <el-input v-model="scope.row.score" :disabled="isLook || !scope.row.check"></el-input>
               </el-form-item>
             </template>
           </el-table-column>
           <el-table-column prop="state" label="参数来源*">
             <template slot-scope="scope">
-               <el-select v-model="scope.row.state" placeholder="请选择" :disabled="isLook || !scope.row.a">
+               <el-select v-model="scope.row.state" placeholder="请选择" :disabled="isLook || !scope.row.check">
                 <el-option
                   v-for="item in optionState"
                   :key="item.value"
@@ -93,7 +93,7 @@
           <el-table-column prop="g" label="参数计算规则*"></el-table-column>
           <el-table-column prop="classification" label="分值计算分类*">
              <template slot-scope="scope">
-               <el-select v-model="scope.row.classification" placeholder="请选择" :disabled="isLook || !scope.row.a">
+               <el-select v-model="scope.row.classification" placeholder="请选择" :disabled="isLook || !scope.row.check">
                 <el-option
                   v-for="item in optionClassification"
                   :key="item.value"
@@ -105,13 +105,13 @@
           </el-table-column>
           <el-table-column prop="ladder" label="参数阶梯" width="230px">
             <template slot-scope="scope">
-              <div v-for="(item, index) in scope.row.ladder" :key="`lab${index}`" class="ladder-box" :class="isLook || !scope.row.a?'no-click':''">
+              <div v-for="(item, index) in scope.row.ladder" :key="`lab${index}`" class="ladder-box" :class="isLook || !scope.row.check?'no-click':''">
                 <el-form-item>
-                  <el-input v-model="scope.row.ladder[index].start" :disabled="index === 0 ||isLook || !scope.row.a" @input="value=>inputLeft(value, index, scope.row.ladder)"></el-input>
+                  <el-input v-model="scope.row.ladder[index].start" :disabled="index === 0 ||isLook || !scope.row.check" @input="value=>inputLeft(value, index, scope.row.ladder)"></el-input>
                 </el-form-item>
                 <span>&lt;ms</span>
                 <el-form-item>
-                  <el-input v-model="scope.row.ladder[index].end" :disabled="index === scope.row.ladder.length - 1 || isLook || !scope.row.a" @input="value=>inputRight(value, index, scope.row.ladder)"></el-input>
+                  <el-input v-model="scope.row.ladder[index].end" :disabled="index === scope.row.ladder.length - 1 || isLook || !scope.row.check" @input="value=>inputRight(value, index, scope.row.ladder)"></el-input>
                 </el-form-item>
                 <div v-if="index === 0" class="add" @click="add(scope.row.ladder)">+</div>
                 <div v-if="scope.row.ladder.length > 2 && scope.row.ladder.length - 1 === index" class="deleate" @click="deleate(scope.row.ladder)">-</div>
@@ -151,10 +151,10 @@ export default {
       form: {
         tableLook: [
           {
-            date: '合作伙伴', name: '收入占比', a: false, parameters: 0, baseline: 0, type: '1', score: 12, state: '1', g: '收入占比', classification: '1',  ladder: [{start: '', end: '10%'}, {start: '10%', end: '12%'}, {start: '12%', end: ''}], j: '2'
+            date: '合作伙伴', name: '收入占比', check: false, parameters: 0, baseline: 0, type: '1', score: 12, state: '1', g: '收入占比', classification: '1',  ladder: [{start: '', end: '10%'}, {start: '10%', end: '12%'}, {start: '12%', end: ''}], j: '2'
           },
           {
-            date: '合作伙伴', name: '收入占比', a: false, parameters: 0, baseline: 0, type: '2', score: 12, state: '2', g: '收入占比', classification: '2',  ladder: [{start: '', end: '10%'}, {start: '10%', end: ''}], j: '2'
+            date: '合作伙伴', name: '收入占比', check: false, parameters: 0, baseline: 0, type: '2', score: 12, state: '2', g: '收入占比', classification: '2',  ladder: [{start: '', end: '10%'}, {start: '10%', end: ''}], j: '2'
           }
         ],
       },
